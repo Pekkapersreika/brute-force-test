@@ -1,12 +1,18 @@
 import time
 #Tells the final time it took to crack the password
 def final_time(input_start, input_stop):
-
-    finaltime = float(input_start)-float(input_stop)
-    finaltime = float(round(finaltime,2) / -1)
-    result = ""
-    result += (str(finaltime))
-    print("It took " + result + " seconds")
+    finalTime = (float(input_start)-float(input_stop)) / -1
+    minuteString = str(finalTime / 60)  
+    if(minuteString[0] != '-'):
+        minutes = int(minuteString[0])
+    seconds = finalTime
+    result = str(finalTime)
+    if(finalTime > 60):
+        print("It took " + str(minutes) + " minutes and " + str(round(seconds - float(60 * minutes))) + " seconds")
+    else:
+        finalTime = round(finalTime,2)
+        result = str(finalTime)
+        print("It took " + result + " seconds")
 
 #Starts the timer
 def start_time(event = None):
@@ -25,16 +31,23 @@ def split_time():
 
 #Tells the user how much time has elapsed
 def final_split(splitStart, split):
-    splitTime = float(splitStart)-float(split)
-    splitTime = float(round(splitTime,2) / -1)
-    result = ""
-    result += (str(splitTime))
-    print("Time elapsed " + result + " seconds")
+    splitTime = (float(splitStart)-float(split)) / -1
+    minuteString = str(splitTime / 60)
+    if(minuteString[0] != '-'):
+        minutes = int(minuteString[0])
+    seconds = splitTime
+    result = str(splitTime)
+    if(splitTime > 60):
+        print("Time elapsed " + str(minutes) + " minutes and " + str(round(seconds - float(60 * minutes))) + " seconds")
+    else:
+        splitTime = round(splitTime,2)
+        result = str(splitTime)
+        print("Time elapsed " + result + " seconds")
+
 
 def brute_force():
-    start_time()
-    #Input password here, later I might make the program ask the user to input the password
-    password = "asdfgh"
+    password = input("Enter password: (six lowercase letters and/or numbers)\n")
+    print("----------------------------------------------------")
     index1 = 0
     index2 = 0
     index3 = 0
@@ -51,12 +64,14 @@ def brute_force():
                 "y", "z", "0", "1",
                 "2", "3", "4", "5",
                 "6", "7", "8", "9"]
+    start_time()
     while index1 < 36:
         first = alphabet[index1]
 
         split_time()
-        print("Number of password tries = " + str(tryNmbr))
+        print("Number of tried passwords = " + str(tryNmbr))
         print("----------------------------------------------------")
+        print("Loading...", end="\r")
 
         while index2 < 36:
             second = alphabet[index2]
@@ -83,8 +98,7 @@ def brute_force():
 
                             if(guess == password):
                                 print("Success")
-                                print("Password = " + password)
-                                print("Guess = " + guess)
+                                print("Password = " + guess)
                                 print("Number of tried passwords = " + str(tryNmbr))
                                 print("----------------------------------------------------")
                                 index1 = 36
